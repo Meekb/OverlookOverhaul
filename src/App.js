@@ -19,9 +19,9 @@ class App extends Component {
     fetch(`http://localhost:3001/api/v1/customers`)
     .then(data => data.json())
     .then(
-      (customers) => {
+      (customersData) => {
         this.setState({
-          customers: customers.customers
+          customers: customersData.customers
       });
     },
   )
@@ -30,9 +30,9 @@ class App extends Component {
     fetch(`http://localhost:3001/api/v1/rooms`)
     .then(data => data.json())
     .then(
-      (rooms) => {
+      (roomsData) => {
         this.setState({
-          rooms: rooms.rooms
+          rooms: roomsData.rooms
         });
       },
     )
@@ -41,9 +41,9 @@ class App extends Component {
     fetch(`http://localhost:3001/api/v1/bookings`)
     .then(data => data.json())
     .then(
-      (bookings) => {
+      (bookingsData) => {
         this.setState({
-          bookings: bookings.bookings
+          bookings: bookingsData.bookings
         })
       },
     )

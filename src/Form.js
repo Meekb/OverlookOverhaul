@@ -13,7 +13,7 @@ class Form extends Component {
     }
   }
 
-  handleChange = (event) => {
+  handleChange(event) {
     console.log(this.state); 
     let dateEntered = event.target.value;
     let newFormat = this.formatCheckin(dateEntered);
