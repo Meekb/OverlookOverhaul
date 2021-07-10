@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import Form from './Form';
+import Header from './Header';
 // import RoomsContainer from './RoomsContainer';
+import PropTypes from 'prop-types';
 import './App.css';
+
 
 class App extends Component {
   constructor() {
@@ -50,17 +53,19 @@ class App extends Component {
     .catch(() => this.setState({error: 'Something went wrong'}));  
   }
 
-  showRooms = () => {
-    
+  getRandomCustomer(customersArr) {
+    let index = Math.floor(Math.random() * customersArr.length);
+    let customer = customersArr[index];
+    return customer
   }
 
   render() {
+    const customers = this.state.customers;
+
     return (
       <main>
-        <h1>Overlook Hotel</h1>
-        {!this.state.customers.length && <p>Loading content...</p>}
+        <Header customers={this.state.customers} getRandomCustomer={this.getRandomCustomer} />
         <Form />
-        {/* <RoomsContainer rooms={this.state.rooms} /> */}
       </main>
     );
   }
@@ -68,3 +73,10 @@ class App extends Component {
 }
 
 export default App;
+
+App.propTypes = {
+  customers: PropTypes.array,
+  rooms: PropTypes.array,
+  bookings: PropTypes.array,
+  error: PropTypes.string
+}
