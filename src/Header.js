@@ -8,7 +8,7 @@ const Header = ({customers, getRandomCustomer}) => {
   return (
     <header className='header'>
       <h1>Welcome to Overlook Hotel</h1>
-      <h2 className='greeting'>Welcome back, !</h2>
+      <h2 className='greeting'>Welcome back, USER!</h2>
     </header>
   );
 }

@@ -56,13 +56,13 @@ class Form extends Component {
             />
           </label>
           <p>Pick your room type to check availability:</p>
+          <section className='room-type-btns'>
+            <button >Residential Suite</button>
+            <button >Suite</button>
+            <button >Junior Suite</button>
+            <button >Single Room</button>
+          </section>
         </form>
-        <section className='room-type-btns'>
-          <button >Residential Suite</button>
-          <button >Suite</button>
-          <button >Junior Suite</button>
-          <button >Single Room</button>
-        </section>
       </main>
     );
   }
