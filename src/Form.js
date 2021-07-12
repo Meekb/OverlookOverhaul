@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import Error from './Error';
+import Error from './Error';
 import PropTypes from 'prop-types';
 // import RoomsContainer from './RoomsContainer';
 import './Form.css';
@@ -9,19 +9,17 @@ class Form extends Component {
     super();
     this.state = {
       checkin: '',
-      error: ''
+      error: false
     }
   }
 
   handleChange(event) {
     console.log(this.state); 
     let dateEntered = event.target.value;
-    let newFormat = this.formatCheckin(dateEntered);
-    // this.setState({ [event.target.name]: newFormat });
-    console.log('date entered', dateEntered)
-    console.log('newFormat', newFormat)
-    console.log(this.state);
-    return newFormat;
+    let formattedDate = this.formatCheckin(dateEntered);
+    this.setState({ [event.target.name]: formattedDate });
+    this.checkDateError(formattedDate);
+    return formattedDate;
   }
 
   formatCheckin(dateToFormat) {
@@ -32,16 +30,43 @@ class Form extends Component {
     return formattedDate;
   }
 
-  // checkError = () => {
+  determineMonthNum(monthString) {
+    const monthObj = {
+      'Jan': 1,
+      'Feb': 2,
+      'Mar': 3,
+      'Apr': 4,
+      'May': 5,
+      'Jun': 6,
+      'Jul': 7,
+      'Aug': 8,
+      'Sep': 9,
+      'Oct': 10,
+      'Nov': 11,
+      'Dec': 12
+    }
+    let monthNum = monthObj[monthString];
+    return monthNum
+  }
 
-  //   const calendar = document.getElementById('calendar');
-  //   const dateSelected = calendar.value;
-    
-
-  //   this.dateSelected < todaysDate ? true : false
-  // }
+  checkDateError = (formattedDate) => {
+    const dateCompareFormat = formattedDate.split('/')
+    const checkinMonth = parseInt(dateCompareFormat[0]);
+    const checkinDate = parseInt(dateCompareFormat[1]);
+    const checkinYear = parseInt(dateCompareFormat[2]);
+    const today = new Date().toDateString();
+    const monthToConvert = today.split(' ')[1]
+    const monthNow = this.determineMonthNum(monthToConvert);
+    const dateNow = today.split(' ')[2]
+    const yearNow = today.split(' ')[3]
+    const compareData = [monthNow, parseInt(dateNow), parseInt(yearNow)]
+    if ( (checkinMonth < compareData[0]) || (checkinMonth === compareData[0] && checkinDate < compareData[1]) )  {
+      this.setState( {error: true} )
+    }
+  }
 
   render() {
+
     return (
       <main className='main-area' >
         <form>
@@ -53,6 +78,7 @@ class Form extends Component {
               className='calendar'
               id='calendar'
               onChange={(event) => this.handleChange(event)}
+              required
             />
           </label>
           <p>Pick your room type to check availability:</p>
@@ -60,8 +86,9 @@ class Form extends Component {
             <button >Residential Suite</button>
             <button >Suite</button>
             <button >Junior Suite</button>
-            <button >Single Room</button>
+            <button onClick={(e) => console.log(this.state)} >Single Room</button>
           </section>
+          {this.state.error && <Error />}
         </form>
       </main>
     );
