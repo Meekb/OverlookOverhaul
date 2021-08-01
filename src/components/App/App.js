@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Form } from '../Form/Form';
 // import RoomsContainer from './RoomsContainer';
 import PropTypes from 'prop-types';
-// import { fetchCustomers, fetchRooms, fetchBookins } from '../apiCalls.js';
 import './App.css';
 
 
@@ -20,7 +19,7 @@ const App = () => {
     try {
       const response = await fetch(url)
       const customers = await response.json()
-      setCustomers(customers)
+      setCustomers(customers.customers)
     } catch (error) {
       setError(error.message)
     }
@@ -37,7 +36,7 @@ const App = () => {
     try {
       const response = await fetch(url)
       const rooms = await response.json()
-      setRooms(rooms)
+      setRooms(rooms.rooms)
     } catch (error) {
       setError(error.message)
     }
@@ -54,7 +53,7 @@ const App = () => {
     try {
       const response = await fetch(url)
       const bookings = await response.json()
-      setBookings(bookings)
+      setBookings(bookings.bookings)
     } catch (error) {
       setError(error.message)
     }
@@ -63,17 +62,31 @@ const App = () => {
   useEffect(() => {
     getBookings()
   }, []);
+
+  const getRandomCustomer = (customers) => {
+    const randomCust = ~~(Math.random() * customers.length);
+    console.log(randomCust)
+    return randomCust
+  }
+
+  const [randomCustomer, setRandomCustomer] = useState({})
+
+  useEffect(() => {
+    setRandomCustomer(customers[getRandomCustomer(customers)])
+    console.log(randomCustomer)
+    return randomCustomer
+  })
   
 
   return (
       <div className='app'>
         <header className='header'>
           <h1>Welcome to Overlook Hotel</h1>
-          <h2 className='greeting'>Welcome back, USER!</h2>
+          <h2 className='greeting'>Welcome back, {randomCustomer.name}!</h2>
         </header>
         <main>
           <Form />
-        </main>
+        </main> 
       </div>
   ) 
 

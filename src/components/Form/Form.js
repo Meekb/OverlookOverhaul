@@ -16,7 +16,6 @@ export const Form = () => {
     return formattedDate;
   }
 
-
   const checkDateError = (inputDate) => {
     let today = new Date();
     let dd = today.getDate()
